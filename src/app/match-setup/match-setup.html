@@ -1,0 +1,98 @@
+<main class="setup-page" aria-labelledby="page-title">
+  <p-card styleClass="setup-card">
+    <ng-template #header>
+      <div class="card-header">
+        <i class="pi pi-star-fill" aria-hidden="true"></i>
+        <h1 id="page-title">Nova Partida de Tênis</h1>
+      </div>
+    </ng-template>
+
+    <form (submit)="onSubmit($event)" novalidate>
+      <section aria-labelledby="players-title">
+        <h2 id="players-title" class="section-title">Jogadores</h2>
+
+        <div class="form-row">
+          <div class="form-field">
+            <label for="player1Name">Jogador 1</label>
+            <input
+              id="player1Name"
+              pInputText
+              type="text"
+              placeholder="Nome do jogador 1"
+              [formField]="matchForm.player1Name"
+              [class.ng-invalid]="matchForm.player1Name().touched() && matchForm.player1Name().invalid()"
+              aria-required="true"
+              [attr.aria-describedby]="matchForm.player1Name().touched() && matchForm.player1Name().invalid() ? 'player1-error' : null"
+            />
+            @if (matchForm.player1Name().touched() && matchForm.player1Name().invalid()) {
+              <small id="player1-error" class="error-message" role="alert">
+                {{ matchForm.player1Name().errors()[0].message }}
+              </small>
+            }
+          </div>
+
+          <div class="form-field">
+            <label for="player2Name">Jogador 2</label>
+            <input
+              id="player2Name"
+              pInputText
+              type="text"
+              placeholder="Nome do jogador 2"
+              [formField]="matchForm.player2Name"
+              [class.ng-invalid]="matchForm.player2Name().touched() && matchForm.player2Name().invalid()"
+              aria-required="true"
+              [attr.aria-describedby]="matchForm.player2Name().touched() && matchForm.player2Name().invalid() ? 'player2-error' : null"
+            />
+            @if (matchForm.player2Name().touched() && matchForm.player2Name().invalid()) {
+              <small id="player2-error" class="error-message" role="alert">
+                {{ matchForm.player2Name().errors()[0].message }}
+              </small>
+            }
+          </div>
+        </div>
+      </section>
+
+      <p-divider />
+
+      <section aria-labelledby="rules-title">
+        <h2 id="rules-title" class="section-title">Regras da Partida</h2>
+
+        <div class="form-row">
+          <div class="form-field">
+            <label id="sets-label">Número de Sets</label>
+            <p-select-button
+              [options]="setsOptions"
+              optionLabel="label"
+              optionValue="value"
+              [formField]="matchForm.totalSets"
+              aria-labelledby="sets-label"
+              [allowEmpty]="false"
+            />
+          </div>
+
+          <div class="form-field">
+            <label id="games-label">Games por Set</label>
+            <p-select-button
+              [options]="gamesOptions"
+              optionLabel="label"
+              optionValue="value"
+              [formField]="matchForm.gamesPerSet"
+              aria-labelledby="games-label"
+              [allowEmpty]="false"
+            />
+          </div>
+        </div>
+      </section>
+
+      <div class="form-actions">
+        <p-button
+          type="submit"
+          label="Iniciar Partida"
+          icon="pi pi-play"
+          [disabled]="matchForm().invalid()"
+          size="large"
+        />
+      </div>
+    </form>
+  </p-card>
+</main>
