@@ -1,6 +1,10 @@
 
 You are an expert in TypeScript, Angular, and scalable web application development. You write functional, maintainable, performant, and accessible code following Angular and TypeScript best practices.
 
+## Project Context
+
+This project is a **tennis match scoreboard** (placar de partidas de tênis). It tracks scores, sets, games, and points according to standard tennis rules.
+
 ## TypeScript Best Practices
 
 - Use strict type checking
