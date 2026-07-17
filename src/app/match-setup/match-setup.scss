@@ -4,7 +4,7 @@
   align-items: center;
   justify-content: center;
   padding: 2rem 1rem;
-  background: var(--p-surface-900);
+  background: var(--color-bg-page);
 }
 
 .setup-card {
@@ -13,11 +13,11 @@
 }
 
 ::ng-deep .setup-card {
-  border: 1px solid color-mix(in srgb, var(--p-surface-0) 10%, transparent);
+  border: 1px solid var(--color-border-soft);
   box-shadow:
-    0 1px 0 color-mix(in srgb, var(--p-surface-0) 8%, transparent),
-    0 0 0 1px color-mix(in srgb, var(--p-surface-0) 6%, transparent),
-    0 14px 28px color-mix(in srgb, black 36%, transparent);
+    0 1px 0 var(--color-shadow-soft),
+    0 0 0 1px var(--color-shadow-ring),
+    0 14px 28px var(--color-shadow-strong);
 }
 
 .card-header {
@@ -28,7 +28,7 @@
 
   i {
     font-size: 1.75rem;
-    color: var(--p-primary-color);
+    color: var(--color-brand-primary);
   }
 
   h1 {
@@ -38,7 +38,7 @@
     font-weight: 700;
     letter-spacing: 0.04em;
     text-transform: uppercase;
-    color: var(--p-text-color);
+    color: var(--color-text-primary);
   }
 }
 
@@ -46,7 +46,7 @@
   font-family: 'Barlow Condensed', system-ui, sans-serif;
   font-size: 0.85rem;
   font-weight: 600;
-  color: var(--p-text-muted-color);
+  color: var(--color-text-muted);
   text-transform: uppercase;
   letter-spacing: 0.12em;
   margin: 0 0 1.25rem;
@@ -69,7 +69,7 @@
 
   label {
     font-weight: 500;
-    color: var(--p-text-color);
+    color: var(--color-text-primary);
     font-size: 0.9rem;
   }
 
@@ -95,7 +95,7 @@
 }
 
 .error-message {
-  color: var(--p-red-500);
+  color: var(--color-feedback-error);
   font-size: 0.8rem;
 }
 
