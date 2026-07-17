@@ -1,0 +1,73 @@
+<main class="score-page" aria-labelledby="score-title">
+  <header class="score-header">
+    <h1 id="score-title">Placar da Partida</h1>
+    <p class="timer" role="timer" aria-live="off">Tempo: {{ elapsedTime() }}</p>
+
+    @if (matchState(); as state) {
+      <div class="header-actions" aria-label="Ações da partida">
+        <p-button
+          label="Desfazer"
+          icon="pi pi-undo"
+          severity="secondary"
+          [disabled]="!canUndo()"
+          (onClick)="undoLastPoint()"
+        />
+        <p-button
+          label="Nova"
+          icon="pi pi-refresh"
+          text="true"
+          (onClick)="restartMatch()"
+        />
+
+        @if (state.score.ended) {
+          <p class="match-ended" role="status" aria-live="polite">Partida encerrada</p>
+        }
+      </div>
+    }
+  </header>
+
+  @if (showRotateNotice()) {
+    <section class="rotate-notice" role="status" aria-label="Aviso de orientação">
+      <i class="pi pi-mobile" aria-hidden="true"></i>
+      <p>Para melhor visualização do placar, gire o dispositivo para horizontal.</p>
+    </section>
+  }
+
+  @if (matchState(); as state) {
+    <section class="scoreboard" aria-label="Placar principal">
+      <button
+        type="button"
+        class="player-panel player-panel--left"
+        (click)="addPoint('player1')"
+        [disabled]="state.score.ended"
+        [attr.aria-label]="'Adicionar ponto para ' + state.player1Name"
+      >
+        <span class="player-name">{{ state.player1Name }}</span>
+        <span class="player-point">{{ pointsDisplay().player1 }}</span>
+        <span class="player-score-detail">Sets: {{ state.score.sets.player1 }}</span>
+        <span class="player-score-detail">Games: {{ state.score.games.player1 }}</span>
+        <span class="player-hint">Toque para pontuar</span>
+      </button>
+
+      <button
+        type="button"
+        class="player-panel player-panel--right"
+        (click)="addPoint('player2')"
+        [disabled]="state.score.ended"
+        [attr.aria-label]="'Adicionar ponto para ' + state.player2Name"
+      >
+        <span class="player-name">{{ state.player2Name }}</span>
+        <span class="player-point">{{ pointsDisplay().player2 }}</span>
+        <span class="player-score-detail">Sets: {{ state.score.sets.player2 }}</span>
+        <span class="player-score-detail">Games: {{ state.score.games.player2 }}</span>
+        <span class="player-hint">Toque para pontuar</span>
+      </button>
+
+      <section class="score-divider" aria-label="Resumo central do placar">
+        <span>{{ pointsDisplay().player1 }}</span>
+        <span class="divider-dot" aria-hidden="true">•</span>
+        <span>{{ pointsDisplay().player2 }}</span>
+      </section>
+    </section>
+  }
+</main>

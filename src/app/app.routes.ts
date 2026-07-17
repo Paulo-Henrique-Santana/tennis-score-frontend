@@ -7,4 +7,9 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./match-setup/match-setup').then((m) => m.MatchSetup),
   },
+  {
+    path: 'match',
+    loadComponent: () =>
+      import('./match-score/match-score').then((m) => m.MatchScore),
+  },
 ];

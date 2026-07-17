@@ -6,13 +6,7 @@ import { CardModule } from 'primeng/card';
 import { DividerModule } from 'primeng/divider';
 import { InputTextModule } from 'primeng/inputtext';
 import { SelectButtonModule } from 'primeng/selectbutton';
-
-interface MatchSetupData {
-  player1Name: string;
-  player2Name: string;
-  totalSets: number;
-  gamesPerSet: number;
-}
+import { MatchSetupData } from '../match.model';
 
 @Component({
   selector: 'app-match-setup',
