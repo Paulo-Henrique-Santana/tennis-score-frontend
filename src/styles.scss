@@ -1,1 +1,35 @@
 /* You can add global styles to this file, and also import other style files */
+@import "primeicons/primeicons.css";
+
+:root {
+  /* Brand and semantic palette */
+  --color-brand-primary: var(--p-primary-color);
+  --color-brand-on-primary: var(--p-primary-contrast-color);
+
+  --color-bg-page: var(--p-surface-900);
+  --color-bg-surface: var(--p-surface-800);
+  --color-border-soft: color-mix(in srgb, var(--p-surface-0) 10%, transparent);
+  --color-shadow-soft: color-mix(in srgb, var(--p-surface-0) 8%, transparent);
+  --color-shadow-ring: color-mix(in srgb, var(--p-surface-0) 6%, transparent);
+  --color-shadow-strong: color-mix(in srgb, black 36%, transparent);
+
+  --color-text-primary: var(--p-text-color);
+  --color-text-muted: var(--p-text-muted-color);
+  --color-feedback-error: var(--p-red-500);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  background-color: var(--color-bg-page);
+  color: var(--color-text-primary);
+  font-family: 'Barlow', system-ui, sans-serif;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

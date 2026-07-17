@@ -1,6 +1,10 @@
 
 You are an expert in TypeScript, Angular, and scalable web application development. You write functional, maintainable, performant, and accessible code following Angular and TypeScript best practices.
 
+## Project Context
+
+This project is a **tennis match scoreboard** (placar de partidas de tênis). It tracks scores, sets, games, and points according to standard tennis rules.
+
 ## TypeScript Best Practices
 
 - Use strict type checking
@@ -55,3 +59,38 @@ You are an expert in TypeScript, Angular, and scalable web application developme
 - Use the `providedIn: 'root'` option for singleton services
 - Prefer the `@Service` decorator over `@Injectable({providedIn: 'root'})` for new singleton services (Angular v22+)
 - Use the `inject()` function instead of constructor injection
+
+## PrimeNG
+
+This project uses PrimeNG v20 with the `@primeuix/themes` Aura preset and `primeicons`.
+
+### Setup (already configured)
+- `providePrimeNG` and `provideAnimationsAsync` are registered in `app.config.ts`
+- Theme preset: **Aura** (from `@primeuix/themes/aura`)
+- Dark mode is toggled by adding the `.dark` class to an ancestor element
+- Primeicons CSS is imported globally in `styles.scss`
+
+### Using Components
+- Import PrimeNG components directly into the `imports` array of standalone components — no module needed
+- Each component lives in its own entry point, e.g. `import { ButtonModule } from 'primeng/button'`
+- Prefer importing the specific module (e.g. `ButtonModule`) over barrel imports
+
+```typescript
+import { ButtonModule } from 'primeng/button';
+import { TableModule } from 'primeng/table';
+
+@Component({
+  imports: [ButtonModule, TableModule],
+  template: `<p-button label="Save" />`
+})
+```
+
+### Theming
+- Use CSS variables exposed by PrimeNG (`--p-primary-color`, `--p-surface-100`, etc.) for custom styles
+- Override the theme via `providePrimeNG({ theme: { preset: Aura, options: { ... } } })` in `app.config.ts`
+- Do NOT import PrimeNG legacy CSS files (`primeng/resources/...`) — they are not used in v20+
+
+### Icons
+- Use primeicons via the `pi` CSS class: `<i class="pi pi-check"></i>` or the `icon` property on components
+- Full icon list: https://primeng.org/icons
+
