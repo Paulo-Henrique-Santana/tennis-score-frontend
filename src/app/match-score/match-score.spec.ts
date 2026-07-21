@@ -9,7 +9,8 @@ describe('MatchScore', () => {
   let fixture: any;
 
   beforeEach(() => {
-    Object.defineProperty(window, 'matchMedia', {
+    const win = (globalThis as any).window ?? globalThis;
+    Object.defineProperty(win, 'matchMedia', {
       configurable: true,
       writable: true,
       value: vi.fn().mockReturnValue({
@@ -76,6 +77,14 @@ describe('MatchScore', () => {
     expect(component.pointsDisplay().player1).toBe('15');
     expect(component.pointsDisplay().player2).toBe('0');
     expect(component.canUndo()).toBe(true);
+  });
+
+  it('should hide rotate notice when requested', () => {
+    component.showRotateNotice.set(true);
+
+    component.hideRotateNotice();
+
+    expect(component.showRotateNotice()).toBe(false);
   });
 
   it('should undo last point', () => {

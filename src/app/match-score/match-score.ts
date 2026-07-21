@@ -101,6 +101,10 @@ export class MatchScore {
     void this.router.navigate(['/']);
   }
 
+  hideRotateNotice(): void {
+    this.showRotateNotice.set(false);
+  }
+
   private initializeMatch(): void {
     const navigationData = this.parseSetupData(history.state?.['match']);
     if (navigationData) {

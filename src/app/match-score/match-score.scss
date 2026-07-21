@@ -73,6 +73,24 @@
     margin: 0;
     font-size: 0.95rem;
   }
+
+  .rotate-notice__close {
+    appearance: none;
+    border: none;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+    padding: 0.25rem;
+    border-radius: 999px;
+    display: grid;
+    place-items: center;
+    transition: background 150ms ease;
+  }
+
+  .rotate-notice__close:hover,
+  .rotate-notice__close:focus-visible {
+    background: color-mix(in srgb, var(--color-brand-primary) 12%, transparent);
+  }
 }
 
 .scoreboard {
