@@ -1,29 +1,7 @@
 import { Component, computed, DestroyRef, effect, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
-import { MatchSetupData } from '../match.model';
-
-type PlayerKey = 'player1' | 'player2';
-
-interface MatchScoreValue {
-  points: { player1: number; player2: number };
-  games: { player1: number; player2: number };
-  sets: { player1: number; player2: number };
-  ended: boolean;
-}
-
-interface MatchSnapshot {
-  points: { player1: number; player2: number };
-  games: { player1: number; player2: number };
-  sets: { player1: number; player2: number };
-  ended: boolean;
-}
-
-interface MatchState extends MatchSetupData {
-  startedAt: number;
-  score: MatchScoreValue;
-  history: MatchSnapshot[];
-}
+import { MatchScoreValue, MatchSetupData, MatchSnapshot, MatchState, PlayerKey } from '../match.model';
 
 @Component({
   selector: 'app-match-score',
