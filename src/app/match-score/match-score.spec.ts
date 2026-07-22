@@ -79,6 +79,42 @@ describe('MatchScore', () => {
     expect(component.canUndo()).toBe(true);
   });
 
+  it('should compute current server based on current game', () => {
+    component.matchState.set({
+      player1Name: 'Alice',
+      player2Name: 'Bob',
+      totalSets: 3,
+      gamesPerSet: 6,
+      startedAt: Date.now(),
+      score: {
+        points: { player1: 0, player2: 0 },
+        games: { player1: 0, player2: 0 },
+        sets: { player1: 0, player2: 0 },
+        ended: false,
+      },
+      history: [],
+    });
+
+    expect(component.currentServer()).toBe('Alice');
+
+    component.matchState.set({
+      player1Name: 'Alice',
+      player2Name: 'Bob',
+      totalSets: 3,
+      gamesPerSet: 6,
+      startedAt: Date.now(),
+      score: {
+        points: { player1: 0, player2: 0 },
+        games: { player1: 1, player2: 0 },
+        sets: { player1: 0, player2: 0 },
+        ended: false,
+      },
+      history: [],
+    });
+
+    expect(component.currentServer()).toBe('Bob');
+  });
+
   it('should hide rotate notice when requested', () => {
     component.showRotateNotice.set(true);
 

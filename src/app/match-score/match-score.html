@@ -51,6 +51,9 @@
         [attr.aria-label]="'Adicionar ponto para ' + state.player1Name"
       >
         <span class="player-name">{{ state.player1Name }}</span>
+        @if (currentServer() === 'player1') {
+          <span class="player-serve-badge">Saque</span>
+        }
         <span class="player-point">{{ pointsDisplay().player1 }}</span>
         <span class="player-score-detail">Sets: {{ state.score.sets.player1 }}</span>
         <span class="player-score-detail">Games: {{ state.score.games.player1 }}</span>
@@ -65,6 +68,9 @@
         [attr.aria-label]="'Adicionar ponto para ' + state.player2Name"
       >
         <span class="player-name">{{ state.player2Name }}</span>
+        @if (currentServer() === 'player2') {
+          <span class="player-serve-badge">Saque</span>
+        }
         <span class="player-point">{{ pointsDisplay().player2 }}</span>
         <span class="player-score-detail">Sets: {{ state.score.sets.player2 }}</span>
         <span class="player-score-detail">Games: {{ state.score.games.player2 }}</span>

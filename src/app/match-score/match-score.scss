@@ -147,6 +147,22 @@
   font-size: clamp(0.95rem, 1.4vw, 1.3rem);
 }
 
+.player-serve-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  margin: 0.2rem 0;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  background: color-mix(in srgb, var(--color-brand-primary) 18%, transparent);
+  color: var(--color-brand-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
 .player-point {
   font-family: 'Barlow Condensed', system-ui, sans-serif;
   font-size: clamp(2.3rem, 10.5vh, 6.2rem);

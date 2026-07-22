@@ -46,6 +46,16 @@ export class MatchScore {
     return Boolean(state && state.history.length > 0);
   });
 
+  readonly currentServer = computed<PlayerKey | null>(() => {
+    const state = this.matchState();
+    if (!state || state.score.ended) {
+      return null;
+    }
+
+    const gamesPlayed = state.score.games.player1 + state.score.games.player2;
+    return gamesPlayed % 2 === 0 ? 'player1' : 'player2';
+  });
+
   constructor() {
     this.initializeMatch();
     this.startClock();
