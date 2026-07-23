@@ -35,6 +35,13 @@ export class MatchScore {
       return { player1: '0', player2: '0' };
     }
 
+    if (state.score.inTieBreak) {
+      return {
+        player1: String(state.score.points.player1),
+        player2: String(state.score.points.player2),
+      };
+    }
+
     const player1 = this.resolvePointLabel(state.score.points.player1, state.score.points.player2);
     const player2 = this.resolvePointLabel(state.score.points.player2, state.score.points.player1);
 
@@ -101,6 +108,7 @@ export class MatchScore {
     nextState.score.points = { ...previous.points };
     nextState.score.games = { ...previous.games };
     nextState.score.sets = { ...previous.sets };
+    nextState.score.inTieBreak = previous.inTieBreak;
     nextState.score.ended = previous.ended;
 
     this.matchState.set(nextState);
@@ -153,7 +161,10 @@ export class MatchScore {
     const playerPoints = state.score.points[player];
     const otherPoints = state.score.points[other];
 
-    const wonGame = playerPoints >= 4 && playerPoints - otherPoints >= 2;
+    const wonGame = state.score.inTieBreak
+      ? playerPoints >= 7 && playerPoints - otherPoints >= 2
+      : playerPoints >= 4 && playerPoints - otherPoints >= 2;
+
     if (!wonGame) {
       return;
     }
@@ -162,17 +173,51 @@ export class MatchScore {
     state.score.points.player1 = 0;
     state.score.points.player2 = 0;
 
-    const playerGames = state.score.games[player];
-    const otherGames = state.score.games[other];
-    const wonSet = playerGames >= state.gamesPerSet && playerGames - otherGames >= 2;
-
-    if (!wonSet) {
+    if (state.score.inTieBreak) {
+      state.score.inTieBreak = false;
+      this.awardSet(state, player);
       return;
     }
 
+    const playerGames = state.score.games[player];
+    const otherGames = state.score.games[other];
+
+    if (this.hasWonSet(state, playerGames, otherGames)) {
+      this.awardSet(state, player);
+      return;
+    }
+
+    if (
+      state.tieBreakRule === 'tieBreak' &&
+      playerGames === otherGames &&
+      playerGames === state.gamesPerSet - 1
+    ) {
+      state.score.inTieBreak = true;
+    }
+  }
+
+  private hasWonSet(state: MatchState, playerGames: number, otherGames: number): boolean {
+    const target = state.gamesPerSet;
+
+    switch (state.tieBreakRule) {
+      case 'decidingGame':
+        return playerGames >= target && playerGames > otherGames;
+      case 'winByTwo':
+        return playerGames >= target && playerGames - otherGames >= 2;
+      case 'tieBreak':
+        return (
+          playerGames >= target &&
+          playerGames - otherGames >= 2 &&
+          otherGames < target - 1
+        );
+    }
+  }
+
+  private awardSet(state: MatchState, player: PlayerKey): void {
     state.score.sets[player] += 1;
     state.score.games.player1 = 0;
     state.score.games.player2 = 0;
+    state.score.inTieBreak = false;
 
     const setsToWin = Math.floor(state.totalSets / 2) + 1;
     if (state.score.sets[player] >= setsToWin) {
@@ -230,11 +275,19 @@ export class MatchScore {
       return null;
     }
 
+    const tieBreakRule =
+      candidate.tieBreakRule === 'decidingGame' ||
+      candidate.tieBreakRule === 'winByTwo' ||
+      candidate.tieBreakRule === 'tieBreak'
+        ? candidate.tieBreakRule
+        : 'winByTwo';
+
     return {
       player1Name,
       player2Name,
       totalSets: candidate.totalSets,
       gamesPerSet: candidate.gamesPerSet,
+      tieBreakRule,
     };
   }
 
@@ -271,6 +324,7 @@ export class MatchScore {
             player1: Number(parsed.score.sets.player1) || 0,
             player2: Number(parsed.score.sets.player2) || 0,
           },
+          inTieBreak: Boolean(parsed.score.inTieBreak),
           ended: Boolean(parsed.score.ended),
         },
         history: Array.isArray(parsed.history)
@@ -287,6 +341,7 @@ export class MatchScore {
                 player1: Number(snapshot.sets.player1) || 0,
                 player2: Number(snapshot.sets.player2) || 0,
               },
+              inTieBreak: Boolean(snapshot.inTieBreak),
               ended: Boolean(snapshot.ended),
             }))
           : [],
@@ -304,6 +359,7 @@ export class MatchScore {
         points: { player1: 0, player2: 0 },
         games: { player1: 0, player2: 0 },
         sets: { player1: 0, player2: 0 },
+        inTieBreak: false,
         ended: false,
       },
       history: [],
@@ -315,6 +371,7 @@ export class MatchScore {
       points: { ...score.points },
       games: { ...score.games },
       sets: { ...score.sets },
+      inTieBreak: score.inTieBreak,
       ended: score.ended,
     };
   }
@@ -326,12 +383,14 @@ export class MatchScore {
         points: { ...state.score.points },
         games: { ...state.score.games },
         sets: { ...state.score.sets },
+        inTieBreak: state.score.inTieBreak,
         ended: state.score.ended,
       },
       history: state.history.map((snapshot) => ({
         points: { ...snapshot.points },
         games: { ...snapshot.games },
         sets: { ...snapshot.sets },
+        inTieBreak: snapshot.inTieBreak,
         ended: snapshot.ended,
       })),
     };

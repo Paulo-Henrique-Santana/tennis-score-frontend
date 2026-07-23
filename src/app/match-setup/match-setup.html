@@ -71,7 +71,7 @@
           </div>
 
           <div class="form-field">
-            <label id="games-label">Games por Set</label>
+            <label id="games-label">Games para vencer o set</label>
             <p-select-button
               [options]="gamesOptions"
               optionLabel="label"
@@ -81,6 +81,18 @@
               [allowEmpty]="false"
             />
           </div>
+        </div>
+
+        <div class="form-field form-field--full">
+          <label id="tiebreak-label">Regra de desempate</label>
+          <p-select-button
+            [options]="tieBreakOptions"
+            optionLabel="label"
+            optionValue="value"
+            [formField]="matchForm.tieBreakRule"
+            aria-labelledby="tiebreak-label"
+            [allowEmpty]="false"
+          />
         </div>
       </section>
 

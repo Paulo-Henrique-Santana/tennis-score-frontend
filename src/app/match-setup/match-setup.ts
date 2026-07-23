@@ -29,11 +29,18 @@ export class MatchSetup {
     { label: '6 games', value: 6 },
   ];
 
+  readonly tieBreakOptions = [
+    { label: 'Game decisivo', value: 'decidingGame' },
+    { label: 'Vantagem de 2 games', value: 'winByTwo' },
+    { label: 'Tie-break', value: 'tieBreak' },
+  ];
+
   readonly matchModel = signal<MatchSetupData>({
     player1Name: '',
     player2Name: '',
     totalSets: 3,
     gamesPerSet: 6,
+    tieBreakRule: 'decidingGame',
   });
 
   readonly matchForm = form(this.matchModel, (s) => {
@@ -43,6 +50,7 @@ export class MatchSetup {
     minLength(s.player2Name, 2, { message: 'Mínimo de 2 caracteres' });
     required(s.totalSets, { message: 'Selecione o número de sets' });
     required(s.gamesPerSet, { message: 'Selecione o número de games' });
+    required(s.tieBreakRule, { message: 'Selecione a regra de desempate' });
   });
 
   onSubmit(event: Event): void {

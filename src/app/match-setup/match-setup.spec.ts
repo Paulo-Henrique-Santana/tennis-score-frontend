@@ -23,6 +23,17 @@ describe('MatchSetup', () => {
     expect(component).toBeTruthy();
   });
 
+  it('should render tie-break rule options', () => {
+    const fixture = TestBed.createComponent(MatchSetup);
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement as HTMLElement;
+
+    expect(compiled.textContent).toContain('Regra de desempate');
+    expect(compiled.textContent).toContain('Game decisivo');
+    expect(compiled.textContent).toContain('Vantagem de 2 games');
+    expect(compiled.textContent).toContain('Tie-break');
+  });
+
   it('should not navigate when form is invalid', () => {
     const navigateSpy = vi.spyOn(router, 'navigate');
     const event = { preventDefault: vi.fn() } as unknown as Event;
@@ -32,6 +43,7 @@ describe('MatchSetup', () => {
       player2Name: '',
       totalSets: 3,
       gamesPerSet: 6,
+      tieBreakRule: 'decidingGame',
     });
 
     component.onSubmit(event);
@@ -49,6 +61,7 @@ describe('MatchSetup', () => {
       player2Name: 'Bob',
       totalSets: 3,
       gamesPerSet: 6,
+      tieBreakRule: 'decidingGame',
     });
 
     component.onSubmit(event);
@@ -61,6 +74,7 @@ describe('MatchSetup', () => {
           player2Name: 'Bob',
           totalSets: 3,
           gamesPerSet: 6,
+          tieBreakRule: 'decidingGame',
         },
       },
     });

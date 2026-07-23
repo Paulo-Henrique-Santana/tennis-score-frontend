@@ -92,6 +92,35 @@
       font-size: 0.8rem;
     }
   }
+
+  &--full {
+    margin-top: 1.5rem;
+
+    ::ng-deep .p-selectbutton {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      width: 100%;
+      gap: 0;
+
+      @media (max-width: 560px) {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    ::ng-deep .p-togglebutton {
+      flex: none;
+      width: 100%;
+      min-height: 2.75rem;
+      justify-content: center;
+    }
+
+    ::ng-deep .p-togglebutton-label {
+      white-space: normal;
+      text-align: center;
+      line-height: 1.25;
+      font-size: 0.85rem;
+    }
+  }
 }
 
 .error-message {
