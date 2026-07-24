@@ -107,6 +107,61 @@ describe('MatchScore', () => {
     expect(component.currentServer()).toBe('player2');
   });
 
+  it('should rotate serve every two points in tie-break after the first point', () => {
+    component.matchState.set(
+      baseState({
+        score: {
+          points: { player1: 0, player2: 0 },
+          games: { player1: 1, player2: 1 },
+          sets: { player1: 0, player2: 0 },
+          inTieBreak: true,
+          ended: false,
+        },
+      }),
+    );
+
+    expect(component.currentServer()).toBe('player1');
+
+    component.matchState.set(
+      baseState({
+        score: {
+          points: { player1: 1, player2: 0 },
+          games: { player1: 1, player2: 1 },
+          sets: { player1: 0, player2: 0 },
+          inTieBreak: true,
+          ended: false,
+        },
+      }),
+    );
+    expect(component.currentServer()).toBe('player2');
+
+    component.matchState.set(
+      baseState({
+        score: {
+          points: { player1: 1, player2: 1 },
+          games: { player1: 1, player2: 1 },
+          sets: { player1: 0, player2: 0 },
+          inTieBreak: true,
+          ended: false,
+        },
+      }),
+    );
+    expect(component.currentServer()).toBe('player2');
+
+    component.matchState.set(
+      baseState({
+        score: {
+          points: { player1: 2, player2: 1 },
+          games: { player1: 1, player2: 1 },
+          sets: { player1: 0, player2: 0 },
+          inTieBreak: true,
+          ended: false,
+        },
+      }),
+    );
+    expect(component.currentServer()).toBe('player1');
+  });
+
   it('should hide rotate notice when requested', () => {
     component.showRotateNotice.set(true);
 

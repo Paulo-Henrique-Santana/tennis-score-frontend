@@ -60,7 +60,16 @@ export class MatchScore {
     }
 
     const gamesPlayed = state.score.games.player1 + state.score.games.player2;
-    return gamesPlayed % 2 === 0 ? 'player1' : 'player2';
+    const firstServer: PlayerKey = gamesPlayed % 2 === 0 ? 'player1' : 'player2';
+    const otherServer: PlayerKey = firstServer === 'player1' ? 'player2' : 'player1';
+
+    if (!state.score.inTieBreak) {
+      return firstServer;
+    }
+
+    // Tie-break: first server serves 1 point, then alternate every 2 points.
+    const pointsPlayed = state.score.points.player1 + state.score.points.player2;
+    return Math.floor((pointsPlayed + 1) / 2) % 2 === 0 ? firstServer : otherServer;
   });
 
   constructor() {
