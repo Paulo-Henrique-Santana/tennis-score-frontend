@@ -30,17 +30,17 @@ export class MatchSetup {
   ];
 
   readonly tieBreakOptions = [
+    { label: 'Tie-break', value: 'tieBreak' },
     { label: 'Game decisivo', value: 'decidingGame' },
     { label: 'Vantagem de 2 games', value: 'winByTwo' },
-    { label: 'Tie-break', value: 'tieBreak' },
   ];
 
   readonly matchModel = signal<MatchSetupData>({
     player1Name: '',
     player2Name: '',
-    totalSets: 3,
-    gamesPerSet: 6,
-    tieBreakRule: 'decidingGame',
+    totalSets: 1,
+    gamesPerSet: 2,
+    tieBreakRule: 'tieBreak',
   });
 
   readonly matchForm = form(this.matchModel, (s) => {

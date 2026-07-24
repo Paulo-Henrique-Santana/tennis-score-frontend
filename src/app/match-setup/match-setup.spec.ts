@@ -23,6 +23,17 @@ describe('MatchSetup', () => {
     expect(component).toBeTruthy();
   });
 
+  it('should select the first option of each field by default', () => {
+    expect(component.matchModel()).toEqual({
+      player1Name: '',
+      player2Name: '',
+      totalSets: 1,
+      gamesPerSet: 2,
+      tieBreakRule: 'tieBreak',
+    });
+    expect(component.tieBreakOptions[0].value).toBe('tieBreak');
+  });
+
   it('should render tie-break rule options', () => {
     const fixture = TestBed.createComponent(MatchSetup);
     fixture.detectChanges();
