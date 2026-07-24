@@ -55,6 +55,12 @@
       "skillPath": "skills/angular-tooling/SKILL.md",
       "computedHash": "137551a64038adda469b5313224950bb4be432cb76252144b56ed7173eb3c95d"
     },
+    "caveman-commit": {
+      "source": "juliusbrussee/caveman",
+      "sourceType": "github",
+      "skillPath": "skills/caveman-commit/SKILL.md",
+      "computedHash": "f028652defd5fdeddcce2994083cb1a7b201ee827bba8e2495546ee159fca3de"
+    },
     "frontend-design": {
       "source": "anthropics/skills",
       "sourceType": "github",

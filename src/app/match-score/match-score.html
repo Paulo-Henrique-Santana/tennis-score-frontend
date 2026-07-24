@@ -30,6 +30,14 @@
     <section class="rotate-notice" role="status" aria-label="Aviso de orientação">
       <i class="pi pi-mobile" aria-hidden="true"></i>
       <p>Para melhor visualização do placar, gire o dispositivo para horizontal.</p>
+      <button
+        type="button"
+        class="rotate-notice__close"
+        aria-label="Fechar aviso de orientação"
+        (click)="hideRotateNotice()"
+      >
+        <i class="pi pi-times" aria-hidden="true"></i>
+      </button>
     </section>
   }
 
@@ -43,6 +51,9 @@
         [attr.aria-label]="'Adicionar ponto para ' + state.player1Name"
       >
         <span class="player-name">{{ state.player1Name }}</span>
+        @if (currentServer() === 'player1') {
+          <span class="player-serve-badge">Saque</span>
+        }
         <span class="player-point">{{ pointsDisplay().player1 }}</span>
         <span class="player-score-detail">Sets: {{ state.score.sets.player1 }}</span>
         <span class="player-score-detail">Games: {{ state.score.games.player1 }}</span>
@@ -57,17 +68,15 @@
         [attr.aria-label]="'Adicionar ponto para ' + state.player2Name"
       >
         <span class="player-name">{{ state.player2Name }}</span>
+        @if (currentServer() === 'player2') {
+          <span class="player-serve-badge">Saque</span>
+        }
         <span class="player-point">{{ pointsDisplay().player2 }}</span>
         <span class="player-score-detail">Sets: {{ state.score.sets.player2 }}</span>
         <span class="player-score-detail">Games: {{ state.score.games.player2 }}</span>
         <span class="player-hint">Toque para pontuar</span>
       </button>
 
-      <section class="score-divider" aria-label="Resumo central do placar">
-        <span>{{ pointsDisplay().player1 }}</span>
-        <span class="divider-dot" aria-hidden="true">•</span>
-        <span>{{ pointsDisplay().player2 }}</span>
-      </section>
     </section>
   }
 </main>
