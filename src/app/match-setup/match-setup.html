@@ -14,6 +14,7 @@
         <div class="form-row">
           <div class="form-field">
             <label for="player1Name">Jogador 1</label>
+            <small id="player1-hint" class="field-hint">Começa sacando</small>
             <input
               id="player1Name"
               pInputText
@@ -22,7 +23,11 @@
               [formField]="matchForm.player1Name"
               [class.ng-invalid]="matchForm.player1Name().touched() && matchForm.player1Name().invalid()"
               aria-required="true"
-              [attr.aria-describedby]="matchForm.player1Name().touched() && matchForm.player1Name().invalid() ? 'player1-error' : null"
+              [attr.aria-describedby]="
+                matchForm.player1Name().touched() && matchForm.player1Name().invalid()
+                  ? 'player1-hint player1-error'
+                  : 'player1-hint'
+              "
             />
             @if (matchForm.player1Name().touched() && matchForm.player1Name().invalid()) {
               <small id="player1-error" class="error-message" role="alert">
